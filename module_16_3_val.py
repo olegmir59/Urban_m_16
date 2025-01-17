@@ -26,8 +26,8 @@ def get_users() -> Dict[str, str]:
 @app.post('/user/{username}/{age}')
 def create_user(
         username: Annotated[
-            str, Path(min_length=5, max_length=50, description="Введите имя пользователя", example="UrbanUser")],
-        age: Annotated[int, Path(ge=18, le=120, description="Введите возраст", example=24)]
+            str, Path(min_length=5, max_length=50, description="Введите имя пользователя", examples="UrbanUser")],
+        age: Annotated[int, Path(ge=18, le=120, description="Введите возраст", examples=24)]
 ) -> str:
     user_id = next_key()
     users[user_id] = f'Имя: {username}, возраст: {age}'
@@ -37,10 +37,10 @@ def create_user(
 # PUT /user/{user_id}/{username}/{age}
 @app.put('/user/{user_id}/{username}/{age}')
 def update_user(
-        user_id: Annotated[str, Path(description="Введите идентификатор пользователя", example="1")],
+        user_id: Annotated[str, Path(description="Введите идентификатор пользователя", examples="1")],
         username: Annotated[
-            str, Path(min_length=5, max_length=50, description="Введите имя пользователя", example="UrbanUser")],
-        age: Annotated[int, Path(ge=18, le=120, description="Введите возраст", example=24)]
+            str, Path(min_length=5, max_length=50, description="Введите имя пользователя", examples="UrbanUser")],
+        age: Annotated[int, Path(ge=18, le=120, description="Введите возраст", examples=24)]
 ) -> str:
     if user_id not in users:
         raise HTTPException(status_code=404, detail=f'Пользователь с id {user_id} не найден')
@@ -52,7 +52,7 @@ def update_user(
 # DELETE /user/{user_id}
 @app.delete('/user/{user_id}')
 def delete_user(
-        user_id: Annotated[str, Path(description="Введите идентификатор пользователя", example="1")]
+        user_id: Annotated[str, Path(description="Введите идентификатор пользователя", examples="1")]
 ) -> str:
     if user_id not in users:
         raise HTTPException(status_code=404, detail=f'Пользователь с id {user_id} не найден')
